@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html ng-app="Measure">
+
+<head>
+    <title>Speed Test by Measurement Lab</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="assets/images/mlab_logo_m.ico">
+</head>
+
+<body>
+    <div id="wrapper">
+        <button onclick="run()">Start test</button>
+        <div id="downloadResults"></div>
+        <div id="uploadResults"></div>
+    </div>
+    <!-- Scripts -->
+    <script type="text/javascript" src="libraries/ndt7.min.js"></script>
+    <script type="text/javascript">
+        function run() {
+            console.log("Starting test")
+            ndt7.test(
+                {
+                    userAcceptedDataPolicy: true,
+                    uploadworkerfile: "libraries/ndt7-upload-worker.min.js",
+                    downloadworkerfile: "libraries/ndt7-download-worker.min.js"
+                },
+                {
+                    serverChosen: function (server) {
+                        console.log('Testing to:', {
+                            machine: server.machine,
+                            locations: server.location,
+                        });
+                    },
+                    downloadStart: (data) => {
+                        console.log("Starting download");
+                    },
+                    downloadMeasurement: (data) => {
+                        console.log(data);
+                        if (data.Source === 'client') {
+                            document.getElementById("downloadResults").innerHTML =
+                                data.Data.MeanClientMbps.toFixed(2) + ' Mb/s';
+                        }
+                    },
+                    downloadComplete: (data) => {
+                        console.log(data);
+                        console.log("Download complete");
+                        document.getElementById("downloadResults").innerHTML = 
+                            data.LastClientMeasurement.MeanClientMbps.toFixed(2) + " Mb/s";
+                    },
+                    uploadStart: (data) => {
+                        console.log("Starting upload");
+                    },
+                    uploadMeasurement: function (data) {
+                        console.log(data);
+                        if (data.Source === 'client') {
+                            document.getElementById("uploadResults").innerHTML =
+                                data.Data.MeanClientMbps.toFixed(2) + ' Mb/s'
+                        }
+                    },
+                    uploadComplete: function (data) {
+                        console.log(data);
+                        console.log("Upload complete");
+                        document.getElementById("uploadResults").innerHTML = 
+                            data.LastClientMeasurement.MeanClientMbps.toFixed(2) + " Mb/s";
+                    },
+                },
+            );
+        }
+    </script>
+</body>
+
+</html>
