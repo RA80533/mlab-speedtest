@@ -109,6 +109,8 @@ const uploadTest = function(sock, postMessage, now) {
     //        total < nextSizeIncrement
     // ) {
     if (sock.bufferedAmount < desiredBuffer) {
+      console.log(sock.bufferedAmount);
+      console.log(total)
       sock.send(data);
       t = now();
       total += data.length;
