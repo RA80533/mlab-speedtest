@@ -85,7 +85,7 @@ const uploadTest = function(sock, postMessage, now) {
       return;
     }
 
-    const maxMessageSize = 16777216; /* = (1<<24) = 16MB */
+    const maxMessageSize = 1<<20; /* = (1<<24) = 16MB */
     const nextSizeIncrement =
         (data.length >= maxMessageSize) ? Infinity : 16 * data.length;
     if (total >= nextSizeIncrement) {
@@ -104,16 +104,14 @@ const uploadTest = function(sock, postMessage, now) {
     // The buffering bound prevents us from wasting local memory, the time bound
     // prevents us from stalling the UI event loop, and the sizeIncrement bound
     // allows us to dynamically respond to fast connections.
-    // while (sock.bufferedAmount < desiredBuffer &&
-    //        t < loopEndTime &&
-    //        total < nextSizeIncrement
-    // ) {
-    if (sock.bufferedAmount < desiredBuffer) {
+    while (sock.bufferedAmount < desiredBuffer &&
+           t < loopEndTime &&
+           total < nextSizeIncrement
+    ) {
       sock.send(data);
       t = now();
       total += data.length;
     }
-    // }
 
     if (t >= previous + clientMeasurementInterval) {
       const numBytes = total - sock.bufferedAmount;
