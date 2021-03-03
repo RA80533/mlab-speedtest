@@ -36,8 +36,8 @@ gulp.task('copy_libs', function() {
     .pipe(gulp.dest('./app/libraries'));
 
   // Copy the minified @m-lab/ndt7 js files to libraries/.
-  gulp.src([
-    "./node_modules/@m-lab/ndt7/src/*.min.js",
-  ])
-    .pipe(gulp.dest('./app/libraries'));
+  // gulp.src([
+  //   "./node_modules/@m-lab/ndt7/src/*.min.js",
+  // ])
+  //   .pipe(gulp.dest('./app/libraries'));
 });
