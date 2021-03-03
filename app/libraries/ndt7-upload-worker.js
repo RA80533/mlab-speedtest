@@ -137,7 +137,7 @@ const uploadTest = function(sock, postMessage, now) {
   }
 
   sock.onopen = function() {
-    const initialMessageSize = 8192; /* (1<<13) = 8kBytes */
+    const initialMessageSize = 1<<20; /* (1<<13) = 8kBytes */
     // TODO(bassosimone): fill this message - see above comment
     const data = new Uint8Array(initialMessageSize);
     const start = now(); // ms since epoch
