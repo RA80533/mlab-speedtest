@@ -80,7 +80,7 @@ const uploadTest = function(sock, postMessage, now) {
       return;
     }
 
-    const maxMessageSize = 1048576; /* = (1<<20) = 1MB */
+    const maxMessageSize = 65536; /* = (1<<16) = 1MB */
     const nextSizeIncrement =
         (data.length >= maxMessageSize) ? Infinity : 16 * data.length;
     if (total >= nextSizeIncrement) {
