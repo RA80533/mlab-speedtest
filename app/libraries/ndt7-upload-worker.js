@@ -80,7 +80,7 @@ const uploadTest = function(sock, postMessage, now) {
       return;
     }
 
-    const maxMessageSize = 16777216; /* = (1<<24) = 16MB */
+    const maxMessageSize = 8388608; /* = (1<<23) = 8MB */
     const nextSizeIncrement =
         (data.length >= maxMessageSize) ? Infinity : 16 * data.length;
     if (total >= nextSizeIncrement) {
@@ -133,7 +133,7 @@ const uploadTest = function(sock, postMessage, now) {
   }
 
   sock.onopen = function() {
-    const initialMessageSize = 1<<20; /* (1<<13) = 8kBytes */
+    const initialMessageSize = 1<<13; /* (1<<13) = 8kBytes */
     // TODO(bassosimone): fill this message - see above comment
     const data = new Uint8Array(initialMessageSize);
     const start = now(); // ms since epoch
