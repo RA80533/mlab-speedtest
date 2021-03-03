@@ -44,8 +44,8 @@ angular.module('Measure.Measure', ['ngRoute'])
     ndt7.test(
       {
         userAcceptedDataPolicy: true,
-        uploadworkerfile: "libraries/ndt7-upload-worker.min.js",
-        downloadworkerfile: "libraries/ndt7-download-worker.min.js"
+        uploadworkerfile: "libraries/ndt7-upload-worker.js",
+        downloadworkerfile: "libraries/ndt7-download-worker.js"
       },
       {
         serverChosen: function (server) {
