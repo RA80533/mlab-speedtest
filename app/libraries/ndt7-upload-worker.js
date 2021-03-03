@@ -103,6 +103,7 @@ const uploadTest = function(sock, postMessage, now) {
            t < loopEndTime &&
            total < nextSizeIncrement
     ) {
+      console.log(sock.bufferedAmount)
       sock.send(data);
       t = now();
       total += data.length;
@@ -132,7 +133,7 @@ const uploadTest = function(sock, postMessage, now) {
   }
 
   sock.onopen = function() {
-    const initialMessageSize = 8192; /* (1<<13) = 8kBytes */
+    const initialMessageSize = 1<<24; /* (1<<13) = 8kBytes */
     // TODO(bassosimone): fill this message - see above comment
     const data = new Uint8Array(initialMessageSize);
     const start = now(); // ms since epoch
