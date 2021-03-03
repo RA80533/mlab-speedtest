@@ -90,7 +90,7 @@ const uploadTest = function(sock, postMessage, now) {
 
     const clientMeasurementInterval = 250; // ms
     const loopEndTime = Math.min(previous + clientMeasurementInterval, end);
-    const desiredBuffer = 4 *  data.length;
+    const desiredBuffer = 2 *  data.length;
 
     // While we would still like to buffer more messages, and we haven't been
     // running for too long, and we don't need to resize the message... keep
