@@ -103,8 +103,7 @@ const uploadTest = function(sock, postMessage, now) {
            t < loopEndTime &&
            total < nextSizeIncrement
     ) {
-      console.log("Sending " + data.length + " bytes");
-      console.log(sock);
+      console.log(sock.bufferedAmount);
       sock.send(data);
       t = now();
       total += data.length;
