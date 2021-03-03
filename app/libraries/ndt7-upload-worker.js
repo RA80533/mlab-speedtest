@@ -28,10 +28,6 @@ const uploadTest = function(sock, postMessage, now) {
     }
   };
 
-  sock.onerror = function(ev) {
-    console.log(JSON.stringify(ev));
-  }
-
   sock.onmessage = function(ev) {
     if (typeof ev.data !== 'undefined') {
       postMessage({
@@ -80,12 +76,11 @@ const uploadTest = function(sock, postMessage, now) {
     }
     let t = now();
     if (t >= end) {
-      console.log("sock.close()");
       sock.close();
       return;
     }
 
-    const maxMessageSize = 1<<13; /* = (1<<24) = 16MB */
+    const maxMessageSize = 16777216; /* = (1<<24) = 16MB */
     const nextSizeIncrement =
         (data.length >= maxMessageSize) ? Infinity : 16 * data.length;
     if (total >= nextSizeIncrement) {
@@ -108,11 +103,10 @@ const uploadTest = function(sock, postMessage, now) {
            t < loopEndTime &&
            total < nextSizeIncrement
     ) {
-      console.log(sock.bufferedAmount);
-      console.log(total)
       sock.send(data);
       t = now();
       total += data.length;
+      console.log("Total: " + total);
     }
 
     if (t >= previous + clientMeasurementInterval) {
@@ -139,7 +133,7 @@ const uploadTest = function(sock, postMessage, now) {
   }
 
   sock.onopen = function() {
-    const initialMessageSize = 1<<10; /* (1<<13) = 8kBytes */
+    const initialMessageSize = 8192; /* (1<<13) = 8kBytes */
     // TODO(bassosimone): fill this message - see above comment
     const data = new Uint8Array(initialMessageSize);
     const start = now(); // ms since epoch
